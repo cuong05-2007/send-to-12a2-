@@ -127,7 +127,7 @@
             flex: 1;
             padding: 10px;
             border: 2px solid var(--primary-color);
-            border-radius: 5px;
+            border-radius: 5 skepticalpx;
             font-size: 16px;
         }
 
@@ -184,6 +184,15 @@
             bottom: 0;
             width: 100%;
             font-size: 14px;
+        }
+
+        footer a {
+            color: #FFDAB9;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
         }
 
         /* Responsive */
@@ -262,57 +271,47 @@
 
     <footer>
         <p>Chi tiết xin liên hệ chủ trang web - Số điện thoại: 0977575109 - Email: oxyricacid@gmail.com - Done để nhanh hơn tk: 0977575109 momo MBbank 😘😘</p>
+        <p>Tham khảo thêm tại: <a href="https://cuong05-2007.github.io/send-to-12a2-/" target="_blank">https://cuong05-2007.github.io/send-to-12a2-/</a></p>
     </footer>
 
     <script>
-        // URL của API (thay bằng URL thực tế của bạn)
-        const API_URL = 'https://cuong05-2007.github.io/send-to-12a2-/';
+        // Khởi tạo mảng lời nhắn từ localStorage hoặc mảng rỗng
+        let messages = JSON.parse(localStorage.getItem('messages')) || [];
 
-        // Hàm lấy tất cả bài đăng từ API
-        function getMessages() {
-            fetch(API_URL)
-                .then(response => response.json())
-                .then(data => {
-                    displayMessages(data);
-                })
-                .catch(error => console.error('Lỗi khi lấy bài đăng:', error));
-        }
+        // Hiển thị tất cả bài đăng khi trang được tải
+        window.onload = function() {
+            displayMessages();
+        };
 
-        // Hàm hiển thị tất cả bài đăng
-        function displayMessages(messages) {
-            const messagesContainer = document.getElementById('messages-container');
-            messagesContainer.innerHTML = '';
-            messages.forEach(item => {
-                const message = document.createElement('div');
-                message.classList.add('message');
-                message.innerHTML = `<p>${item.content}</p><span class="heart" onclick="likeMessage(this)">❤️</span>`;
-                messagesContainer.appendChild(message);
-            });
-        }
-
-        // Hàm thêm bài đăng mới
+        // Hàm thêm lời nhắn mới
         function addMessage() {
             const messageInput = document.getElementById('message-input');
             const content = messageInput.value.trim();
 
             if (content) {
-                fetch(API_URL, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ content: content }),
-                })
-                .then(response => response.json())
-                .then(data => {
-                    displayMessage(data.content);
-                    messageInput.value = '';
-                })
-                .catch(error => console.error('Lỗi khi đăng bài:', error));
+                // Thêm lời nhắn vào mảng
+                messages.push(content);
+                // Lưu mảng vào localStorage
+                localStorage.setItem('messages', JSON.stringify(messages));
+                // Hiển thị lời nhắn mới trên giao diện
+                displayMessage(content);
+                // Xóa nội dung trong textarea
+                messageInput.value = '';
+            } else {
+                alert('Vui lòng nhập nội dung lời nhắn!');
             }
         }
 
-        // Hàm hiển thị một bài đăng mới
+        // Hàm hiển thị tất cả bài đăng từ mảng
+        function displayMessages() {
+            const messagesContainer = document.getElementById('messages-container');
+            messagesContainer.innerHTML = ''; // Xóa nội dung cũ
+            messages.forEach(content => {
+                displayMessage(content);
+            });
+        }
+
+        // Hàm hiển thị một bài đăng
         function displayMessage(content) {
             const message = document.createElement('div');
             message.classList.add('message');
@@ -320,15 +319,10 @@
             document.getElementById('messages-container').appendChild(message);
         }
 
-        // Hàm xử lý "like" bài đăng
+        // Hàm xử lý tương tác like
         function likeMessage(heart) {
             heart.classList.toggle('liked');
         }
-
-        // Tải bài đăng khi trang được mở
-        window.onload = function() {
-            getMessages();
-        };
     </script>
 </body>
 </html>
