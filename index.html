@@ -265,24 +265,70 @@
     </footer>
 
     <script>
-        // Thêm lời nhắn
+        // URL của API (thay bằng URL thực tế của bạn)
+        const API_URL = 'file:///C:/Users/chil3/Pictures/NeoGesture/web%20sites.html';
+
+        // Hàm lấy tất cả bài đăng từ API
+        function getMessages() {
+            fetch(API_URL)
+                .then(response => response.json())
+                .then(data => {
+                    displayMessages(data);
+                })
+                .catch(error => console.error('Lỗi khi lấy bài đăng:', error));
+        }
+
+        // Hàm hiển thị tất cả bài đăng
+        function displayMessages(messages) {
+            const messagesContainer = document.getElementById('messages-container');
+            messagesContainer.innerHTML = '';
+            messages.forEach(item => {
+                const message = document.createElement('div');
+                message.classList.add('message');
+                message.innerHTML = `<p>${item.content}</p><span class="heart" onclick="likeMessage(this)">❤️</span>`;
+                messagesContainer.appendChild(message);
+            });
+        }
+
+        // Hàm thêm bài đăng mới
         function addMessage() {
             const messageInput = document.getElementById('message-input');
             const content = messageInput.value.trim();
 
             if (content) {
-                const message = document.createElement('div');
-                message.classList.add('message');
-                message.innerHTML = `<p>${content}</p><span class="heart" onclick="likeMessage(this)">❤️</span>`;
-                document.getElementById('messages-container').appendChild(message);
-                messageInput.value = '';
+                fetch(API_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ content: content }),
+                })
+                .then(response => response.json())
+                .then(data => {
+                    displayMessage(data.content);
+                    messageInput.value = '';
+                })
+                .catch(error => console.error('Lỗi khi đăng bài:', error));
             }
         }
 
-        // Tương tác like/heart
+        // Hàm hiển thị một bài đăng mới
+        function displayMessage(content) {
+            const message = document.createElement('div');
+            message.classList.add('message');
+            message.innerHTML = `<p>${content}</p><span class="heart" onclick="likeMessage(this)">❤️</span>`;
+            document.getElementById('messages-container').appendChild(message);
+        }
+
+        // Hàm xử lý "like" bài đăng
         function likeMessage(heart) {
             heart.classList.toggle('liked');
         }
+
+        // Tải bài đăng khi trang được mở
+        window.onload = function() {
+            getMessages();
+        };
     </script>
 </body>
 </html>
