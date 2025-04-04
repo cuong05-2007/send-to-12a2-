@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lời Nhắn Cho Hau – Kỷ Niệm Học Cấp 3</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Biến màu */
+        :root {
+            --primary-color: #8B4513; /* Saddle Brown */
+            --background-color: #FFEFD5; /* Papaya Whip */
+            --section-background: #FFDAB9; /* Peach Puff */
+            --footer-color: #000000;
+            --note-color: #FFE4B5; /* Moccasin */
+        }
+
+        /* Reset và kiểu chung */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: var(--background-color);
+            color: var(--primary-color);
+            line-height: 1.6;
+            padding-bottom: 80px;
+        }
+
+        /* Header */
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            font-family: 'Brush Script MT', cursive;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 20px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: #FFDAB9;
+        }
+
+        /* Banner */
+        .banner {
+            background-image: url('https://via.placeholder.com/1200x400?text=Kỷ+Niệm+Học+Cấp+3');
+            background-size: cover;
+            background-position: center;
+            height: 400px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+            font-size: 36px;
+            font-weight: bold;
+            text-align: center;
+            margin-top: 60px;
+        }
+
+        /* Main */
+        main {
+            padding: 20px;
+        }
+
+        .content-section {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: var(--section-background);
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            font-family: 'Brush Script MT', cursive;
+            font-size: 28px;
+        }
+
+        /* Message Wall */
+        .message-wall {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .add-message {
+            display: flex;
+            gap: 10px;
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        #message-input {
+            flex: 1;
+            padding: 10px;
+            border: 2px solid var(--primary-color);
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #A0522D;
+        }
+
+        #messages-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .message {
+            background-color: var(--note-color);
+            padding: 15px;
+            border-radius: 5px;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            position: relative;
+        }
+
+        .message .heart {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            cursor: pointer;
+            font-size: 18px;
+            color: #ccc;
+        }
+
+        .message .heart.liked {
+            color: red;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--footer-color);
+            color: white;
+            text-align: center;
+            padding: 15px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            font-size: 14px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            nav ul {
+                flex-direction: column;
+                gap: 10px;
+                margin-top: 10px;
+            }
+
+            .banner {
+                height: 200px;
+                font-size: 24px;
+            }
+
+            .content-section {
+                padding: 10px;
+            }
+
+            .message {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">Lời Nhắn Cho Hau</div>
+        <nav>
+            <ul>
+                <li><a href="#home"><i class="fas fa-home"></i> Trang Chủ</a></li>
+                <li><a href="#message-wall"><i class="fas fa-comments"></i> Bức Tường Lời Nhắn</a></li>
+                <li><a href="#album"><i class="fas fa-images"></i> Album Ảnh & Video</a></li>
+                <li><a href="#guestbook"><i class="fas fa-book"></i> Guestbook</a></li>
+                <li><a href="#mini-games"><i class="fas fa-gamepad"></i> Mini Games</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="banner" id="home">
+        Lời Nhắn Cho Hau – Kỷ Niệm Học Cấp 3
+    </div>
+
+    <main>
+        <section id="message-wall" class="content-section">
+            <h2><i class="fas fa-comments"></i> Bức Tường Lời Nhắn</h2>
+            <div class="message-wall">
+                <div class="add-message">
+                    <textarea id="message-input" placeholder="Nhập lời nhắn của bạn..."></textarea>
+                    <button onclick="addMessage()"><i class="fas fa-plus"></i> Đăng</button>
+                </div>
+                <div id="messages-container"></div>
+            </div>
+        </section>
+
+        <section id="album" class="content-section">
+            <h2><i class="fas fa-images"></i> Album Ảnh & Video</h2>
+            <p>Chỗ này sẽ hiển thị bộ sưu tập ảnh và video kỷ niệm (có thể thêm sau).</p>
+        </section>
+
+        <section id="guestbook" class="content-section">
+            <h2><i class="fas fa-book"></i> Guestbook</h2>
+            <p>Mục để ký tên và gửi lời chúc (sẽ được tích hợp thêm).</p>
+        </section>
+
+        <section id="mini-games" class="content-section">
+            <h2><i class="fas fa-gamepad"></i> Mini Games</h2>
+            <p>Các thử thách nhỏ như "Lời nhắn hay nhất" (sẽ được phát triển thêm).</p>
+        </section>
+    </main>
+
+    <footer>
+        <p>Chi tiết xin liên hệ chủ trang web - Số điện thoại: 0977575109 - Email: oxyricacid@gmail.com - Done để nhanh hơn tk: 0977575109 momo MBbank 😘😘</p>
+    </footer>
+
+    <script>
+        // Thêm lời nhắn
+        function addMessage() {
+            const messageInput = document.getElementById('message-input');
+            const content = messageInput.value.trim();
+
+            if (content) {
+                const message = document.createElement('div');
+                message.classList.add('message');
+                message.innerHTML = `<p>${content}</p><span class="heart" onclick="likeMessage(this)">❤️</span>`;
+                document.getElementById('messages-container').appendChild(message);
+                messageInput.value = '';
+            }
+        }
+
+        // Tương tác like/heart
+        function likeMessage(heart) {
+            heart.classList.toggle('liked');
+        }
+    </script>
+</body>
+</html>
